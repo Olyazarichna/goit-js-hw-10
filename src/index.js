@@ -8,7 +8,12 @@ const refs = {
     divEl: document.querySelector('.country-info'),
 }
 
-const URL = "https://restcountries.com/v2/name/peru";
+const URL = "https://restcountries.com/v3.1/name/${name}?fields=name.official,capital,population,flags.svg,languages";
+// name.official - повна назва країни
+// capital - столиця
+// population - населення
+// flags.svg - посилання на зображення прапора
+// languages - масив мов
 
 
 function fetchCountries(name) {
@@ -27,11 +32,6 @@ function fetchCountries(name) {
 fetchCountries();
 
 
-// name.official - повна назва країни
-// capital - столиця
-// population - населення
-// flags.svg - посилання на зображення прапора
-// languages - масив мов
 
 function rendeList() {
    
