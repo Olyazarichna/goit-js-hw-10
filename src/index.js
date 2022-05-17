@@ -1,6 +1,13 @@
 import './css/styles.css';
+import Notiflix from 'notiflix';
 
 const DEBOUNCE_DELAY = 300;
+
+const refs = {
+    listEl: document.querySelector('.country-list'),
+    divEl: document.querySelector('.country-info'),
+}
+
 const URL = "https://restcountries.com/v2/name/peru";
 
 
@@ -20,34 +27,29 @@ function fetchCountries(name) {
 fetchCountries();
 
 
-// const searchParams = new URLSearchParams {
-//     // "name.official": name.official,
-//     "capital": capital,
-//     // "flag":flags.svg,
-
-//     languages,
-
-// }
-
 // name.official - повна назва країни
 // capital - столиця
 // population - населення
 // flags.svg - посилання на зображення прапора
 // languages - масив мов
 
-function markUpList() {
+function rendeList() {
+   
     return` 
-    <li></li>`
+    <li class="country">
+    <img src="{{flags.svg}}">
+    <p class = country-name>{{name.official}}</p>
+    </li>`
 
 }
+renderDiv();
 
-function markUpDiv(){
+function renderDiv(){
     return `
-    <img>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    
+    <img src="{{flags.svg}}">
+    <p>{{name.official}}</p>
+    <p>{{population}}</p>
+    <p>{{capital}}</p>
+    <p>{{languages}}</p>
     `
 }
