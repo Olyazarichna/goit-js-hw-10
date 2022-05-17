@@ -1,5 +1,6 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
+import countryCard from './templates/country-card.hbs'
 
 const DEBOUNCE_DELAY = 300;
 
@@ -8,48 +9,33 @@ const refs = {
     divEl: document.querySelector('.country-info'),
 }
 
-const URL = "https://restcountries.com/v3.1/name/${name}?fields=name.official,capital,population,flags.svg,languages";
-// name.official - повна назва країни
-// capital - столиця
-// population - населення
-// flags.svg - посилання на зображення прапора
-// languages - масив мов
+const URL = "https://restcountries.com/v3.1/name/peru?fields=name,capital,population,flags,languages";
 
 
-function fetchCountries(name) {
-   return fetch(URL).then(response => {
-       if(!response.ok) {
-           throw new Error(response.status);
-       }
-       console.log(response.json());
+ fetch(URL).then(response => {
+    //    if(!response.ok) {
+    //        throw new Error(response.status);
+    //    }
        return response.json();
    }).then(name => {
        console.log(name); 
+       const markUp = countryCard(name);
+       console.log(markUp);
    }).catch(error => error.message);
-};
-
-
-fetchCountries();
 
 
 
-function rendeList() {
+// fetchCountries();
+
+
+
+// function rendeList() {
    
-    return` 
-    <li class="country">
-    <img src="{{flags.svg}}">
-    <p class = country-name>{{name.official}}</p>
-    </li>`
+//     return` 
+//     <li class="country">
+//     <img src="{{flags.svg}}">
+//     <p class = country-name>{{name.official}}</p>
+//     </li>`
 
-}
-renderDiv();
-
-function renderDiv(){
-    return `
-    <img src="{{flags.svg}}">
-    <p>{{name.official}}</p>
-    <p>{{population}}</p>
-    <p>{{capital}}</p>
-    <p>{{languages}}</p>
-    `
-}
+// }
+// renderDiv();
