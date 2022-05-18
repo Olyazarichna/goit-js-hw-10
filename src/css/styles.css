@@ -47,3 +47,13 @@ ul {
   font-size: 20px;
   transform: translate(0, 30%);
 }
+.country-info{
+  margin-left: 40px;
+}
+.country-card{
+  margin-left: 5px;
+}
+p{
+  font-size: 17px;
+  font-weight: 500;
+}
