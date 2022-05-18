@@ -31,16 +31,17 @@ function onInputField(event) {
 
   fetchCountries(searchQuery)
     .then(country => {
+      if (country.length === 1) {
+        fetchCountries(searchQuery).then(renderCountryCard);
+        return;
+      }
       if (country.length > 10) {
         fetchCountries(searchQuery).then(
           Notiflix.Notify.info('Too many matches found. Please enter a more specific name.'),
         );
         return;
       }
-      if (country.length === 1) {
-        fetchCountries(searchQuery).then(renderCountryCard);
-        return;
-      }
+     
       if (country.length > 2 || country.length <= 10) {
         fetchCountries(searchQuery).then(renderLisrCard);
         return;
