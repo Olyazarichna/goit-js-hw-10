@@ -6,7 +6,7 @@ import countryList from './templates/country-list.hbs';
 
 import { fetchCountries } from './fetchCountries.js';
 
-const DEBOUNCE_DELAY = 500;
+const DEBOUNCE_DELAY = 300;
 
 const refs = {
   listEl: document.querySelector('.country-list'),
