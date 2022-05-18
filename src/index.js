@@ -6,7 +6,7 @@ import countryList from './templates/country-list.hbs';
 
 import { fetchCountries } from './fetchCountries.js';
 
-const DEBOUNCE_DELAY = 300;
+const DEBOUNCE_DELAY = 500;
 
 const refs = {
   listEl: document.querySelector('.country-list'),
@@ -21,33 +21,34 @@ function onInputField(event) {
 
   console.log(refs.inputEl.value);
   const inputValue = refs.inputEl.value;
+  const searchQuery = inputValue.trim();
 
-  if (inputValue === '') {
+  if (searchQuery === '') {
     refs.listEl.innerHTML = '';
     refs.divEl.innerHTML = '';
     return;
   }
 
-  fetchCountries(inputValue).then(country => {
-    console.log(country.length);
-
-    if (country.length > 10) {
-      Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
-    } else if (country.length > 2 || country.length < 10) {
-      fetchCountries(inputValue)
-        .then(renderLisrCard)
-        .catch(error => error.message);
-    } else {fetchCountries(inputValue).then(renderCountryCard);
-    
-        
-    }
-  });
-}
-     
-
-function catchError(error) {
-  console.log(error);
-  return Notiflix.Notify.failure('Oops, there is no country with that name');
+  fetchCountries(searchQuery)
+    .then(country => {
+      if (country.length > 10) {
+        fetchCountries(searchQuery).then(
+          Notiflix.Notify.info('Too many matches found. Please enter a more specific name.'),
+        );
+        return;
+      }
+      if (country.length === 1) {
+        fetchCountries(searchQuery).then(renderCountryCard);
+        return;
+      }
+      if (country.length > 2 || country.length <= 10) {
+        fetchCountries(searchQuery).then(renderLisrCard);
+        return;
+      }
+    })
+    .catch(error => {
+      return Notiflix.Notify.failure('Oops, there is no country with that name');
+    });
 }
 
 function renderCountryCard(name) {
@@ -55,10 +56,7 @@ function renderCountryCard(name) {
   refs.divEl.innerHTML = markUp;
 }
 
-function renderLisrCard() {
-  const markUp = countries
-    .map(country => {
-      return countryList(country);
-    }).join('');
+function renderLisrCard(name) {
+  const markUp = countryList(name);
   refs.listEl.innerHTML = markUp;
 }
