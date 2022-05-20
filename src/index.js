@@ -45,7 +45,7 @@ function onInputField(event) {
         return;
       }
 
-      if (country.length >= 2 || country.length <= 10) {
+      if (country.length >= 2 && country.length <= 10) {
         console.log(country);
         refs.divEl.innerHTML = '';
         fetchCountries(searchQuery).then(renderLisrCard);
